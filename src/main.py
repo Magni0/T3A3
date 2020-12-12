@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -20,6 +23,9 @@ def create_app():
     migrate.init_app(app, db)
     bcrypt.init_app(app)
     jwt.init_app(app)
+
+    from commands import db_commands
+    app.register_blueprint(db_commands)
 
     from controllers import registable_controllers
     for controller in registable_controllers:
