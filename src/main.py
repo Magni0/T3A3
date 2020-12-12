@@ -13,10 +13,10 @@ def create_app():
 
     db.init_app(app)
     ma.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app, db)
 
     from controllers import registable_controllers
     for controller in registable_controllers:
         app.register_blueprint(controller)
 
-    
+    return app
