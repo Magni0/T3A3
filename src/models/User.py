@@ -5,3 +5,6 @@ class User(db.Model):
 
     id = db.Column(db.String(), primary_key=True)
     displayname = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), nullable=False)
+    username = db.Column(db.String(), nullable=False)
+    password = db.Column(db.String(), nullable=False)
