@@ -16,8 +16,15 @@ class DevelopmentConfig(Config):
     DEBUG = True
 
 class ProductionConfig(Config):
-    pass
+    @property
+    def JWT_SECRET_KEY(self):
+        value = JWT_SECRET_KEY
 
+        if not value:
+            raise ValueError("JWT Secret Key not set")
+        
+        return value
+        
 class TestingConfig(Config):
     TESTING = True
 
