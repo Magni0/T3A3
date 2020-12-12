@@ -3,7 +3,7 @@ from schemas.UserSchema import user_schema
 from main import db, bcrypt
 from flask import Blueprint, request, jsonify, abort
 from flask_jwt_extended import create_access_token
-from datatime import timedelta
+from datetime import timedelta
 
 user = Blueprint("user", __name__, url_prefix="/userprofile")
 
