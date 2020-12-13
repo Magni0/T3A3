@@ -3,7 +3,7 @@ from main import db
 class Moods(db.Model):
     __tablename__ = "moods"
 
-    id = db.Column(db.String(), primary_key)
+    id = db.Column(db.String(), primary_key=True)
     amusement = db.Column(db.Integer)
     joy = db.Column(db.Integer)
     beauty = db.Column(db.Integer)
