@@ -21,7 +21,6 @@ def seed_tables_user():
     from main import bcrypt
     from models.User import User
 
-    faker = Faker()
     users = []
 
     for i in range(10):
@@ -37,7 +36,17 @@ def seed_tables_user():
 
 @db_commands.cli.command("seed-images")
 def seed_tables_images():
-    pass
+    from models.Image import Image
+    from random import choice
+
+    for i in range(20):
+        image = Image()
+        image.url = f"testurl{i}.com"
+        image.height = choice(range(600, 1200))
+        image.width = choice(range(600, 1200))
+        db.session.add(image)
+    
+    db.session.commit()
 
 @db_commands.cli.command("seed-moods")
 def seed_tables_moods():
