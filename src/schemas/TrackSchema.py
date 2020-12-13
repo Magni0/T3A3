@@ -10,3 +10,6 @@ class TrackSchema(ma.SQLAlchemyAutoSchema):
     trackname = ma.String(required=True, validate=Length(min=1))
     artist = ma.Nested(ArtistSchema)
     trackurl = ma.String(required=True, validate=Length(min=1))
+
+track_schema = TrackSchema()
+tracks_schema = TrackSchema(many=True)

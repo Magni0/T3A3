@@ -17,3 +17,6 @@ class MoodSchema(ma.SQLAlchemyAutoSchema):
     annoyance = ma.Integer(required=True)
     defiance = ma.Integer(required=True)
     feelingpumped = ma.Integer(required=True)
+
+mood_schema = MoodSchema()
+moods_schema = MoodSchema(many=True)

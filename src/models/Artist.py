@@ -2,8 +2,8 @@ from main import db
 from models.Tracks import Tracks
 
 class Artist(db.Model):
-    __tablename__ = "artist"
+    __tablename__="artists"
 
-    id = db.Column(db.String(), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
-    tracks = relationship("Tracks", uselist=False, backref="name")
+    # tracks = db.relationship("Tracks", uselist=False, backref="")

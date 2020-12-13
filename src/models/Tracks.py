@@ -1,9 +1,9 @@
 from main import db
 
 class Tracks(db.Model):
-    __tablename__ = "tracks"
+    __tablename__="tracks"
 
-    id = db.Column(db.String(), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     trackname = db.Column(db.String(), nullable=False) 
-    artist = db.Column(db.String(), ForeignKey("Artist.id"))
+    artist = db.Column(db.String(), db.ForeignKey("artists.id"))
     trackurl = db.Column(db.String(), nullable=False)

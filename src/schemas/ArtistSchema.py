@@ -6,3 +6,6 @@ class ArtistSchema(ma.SQLAlchemyAutoSchema):
         model = Artist
 
     name = ma.String(required=True)
+
+artist_schema = ArtistSchema()
+artists_schema = ArtistSchema(many=True)

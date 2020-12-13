@@ -13,7 +13,7 @@ class Config(object):
         return value
     
 class DevelopmentConfig(Config):
-    DEBUG = True
+    pass
 
 class ProductionConfig(Config):
     @property

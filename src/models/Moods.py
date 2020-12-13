@@ -1,9 +1,9 @@
 from main import db
 
 class Moods(db.Model):
-    __tablename__ = "moods"
+    __tablename__="moods"
 
-    id = db.Column(db.String(), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     amusement = db.Column(db.Integer, default=0)
     joy = db.Column(db.Integer, default=0)
     beauty = db.Column(db.Integer, default=0)
