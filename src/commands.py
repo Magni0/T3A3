@@ -34,6 +34,19 @@ def seed_tables_user():
     
     db.session.commit()
 
+@db_commands.cli.command("seed-artist")
+def seed_tables_artist():
+    from models.Artist import Artist
+
+    artists = []
+
+    for i in range(10):
+        artist = Artist()
+        artist.name = f"testartistname{i}"
+        db.session.add(artist)
+    
+    db.session.commit()
+
 @db_commands.cli.command("seed-images")
 def seed_tables_images():
     from models.Image import Image
@@ -41,25 +54,17 @@ def seed_tables_images():
 
     for i in range(20):
         image = Image()
-        image.url = f"testurl{i}.com"
+        image.url = f"testurl{i}"
         image.height = choice(range(600, 1200))
         image.width = choice(range(600, 1200))
         db.session.add(image)
     
     db.session.commit()
 
-@db_commands.cli.command("seed-moods")
-def seed_tables_moods():
-    pass
-
 @db_commands.cli.command("seed-tracks")
 def seed_tables_tracks():
     pass
 
-@db_commands.cli.command("seed-artist")
-def seed_tables_artist():
-    pass
-
-@db_commands.cli.command("seed")
+@db_commands.cli.command("seed-all")
 def seed_tables():
     pass
