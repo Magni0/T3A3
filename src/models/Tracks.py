@@ -5,5 +5,5 @@ class Tracks(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     trackname = db.Column(db.String(), nullable=False) 
-    artist = db.Column(db.String(), db.ForeignKey("artists.id"))
+    artist = db.Column(db.Integer, db.ForeignKey("artists.id"))
     trackurl = db.Column(db.String(), nullable=False)

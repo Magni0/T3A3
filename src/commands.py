@@ -1,6 +1,13 @@
 from main import db
 from flask import Blueprint
 from random import choice
+from main import bcrypt
+
+from models.User import User
+from models.Tracks import Tracks
+from models.Artist import Artist
+from models.Image import Image
+
 
 db_commands = Blueprint("db-c", __name__)
 
@@ -19,12 +26,6 @@ def drop_tables():
 
 @db_commands.cli.command("seed")
 def seed_tables():
-    from main import bcrypt
-    from models.User import User
-    from models.Tracks import Tracks
-    from models.Artist import Artist
-    from models.Image import Image
-
     for i in range(10):
         user = User()
         user.id = i
@@ -37,33 +38,33 @@ def seed_tables():
     db.session.commit()
     print("Seeded Table: user")
 
-    # artists = []
+    artists = []
 
-    # for i in range(10):
-    #     artist = Artist()
-    #     artist.name = f"TestArtistName{i}"
-    #     db.session.add(artist)
-    #     artists.append(artist)
+    for i in range(10):
+        artist = Artist()
+        artist.name = f"TestArtistName{i}"
+        db.session.add(artist)
+        artists.append(artist)
     
-    # db.session.commit()
-    # print("Seeded Table: artist")
+    db.session.commit()
+    print("Seeded Table: artist")
 
-    # for i in range(20):
-    #     image = Image()
-    #     image.url = f"TestURL{i}"
-    #     image.height = choice(range(600, 1200))
-    #     image.width = choice(range(600, 1200))
-    #     db.session.add(image)
+    for i in range(20):
+        image = Image()
+        image.url = f"TestURL{i}"
+        image.height = choice(range(600, 1200))
+        image.width = choice(range(600, 1200))
+        db.session.add(image)
     
-    # db.session.commit()
-    # print("Seeded Table: images")
+    db.session.commit()
+    print("Seeded Table: images")
 
-    # for i in range(30):
-    #     track = Tracks()
-    #     track.trackname = f"TestTrackName{i}"
-    #     track.artist = choice(artist).id
-    #     track.trackurl = f"TestTrackURL{i}"
-    #     db.session.add(track)
+    for i in range(30):
+        track = Tracks()
+        track.trackname = f"TestTrackName{i}"
+        track.artist = choice(artists).id
+        track.trackurl = f"TestTrackURL{i}"
+        db.session.add(track)
     
-    # db.session.commit()
-    # print("Seeded Table: tracks")
+    db.session.commit()
+    print("Seeded Table: tracks")
