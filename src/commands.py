@@ -7,6 +7,7 @@ from models.User import User
 from models.Tracks import Tracks
 from models.Artist import Artist
 from models.Image import Image
+from models.Moods import Moods
 
 
 db_commands = Blueprint("db-c", __name__)
@@ -23,6 +24,33 @@ def drop_tables():
     db.drop_all()
     db.engine.execute("DROP TABLE IF EXISTS alembic_version;")
     print("Deleted Tables")
+
+@db_commands.cli.command("dump")
+def dump_tables():
+    users = db.session.query(User).all()
+    print("\nuserprofile")
+    for user in users:
+        print(f"id: {user.id} | displayname: {user.displayname} | email: {user.email} | username: {user.username}")
+
+    tracks = db.session.query(Tracks).all()
+    print("\ntracks")
+    for track in tracks:
+        print(f"id: {track.id} | trackname: {track.trackname} | artist_id: {track.artist_id} | trackurl: {track.trackurl}")
+
+    artists = db.session.query(Artist).all()
+    print("\nartists")
+    for artist in artists:
+        print(f"id: {artist.id} | name: {artist.name}")
+
+    images = db.session.query(Image).all()
+    print("\nimages")
+    for image in images:
+        print(f"id: {image.id} | url: {image.url} | height: {image.height} | width: {image.width}")
+
+    moods = db.session.query(Moods).all()
+    print("\nmoods")
+    for mood in moods:
+        print(f"id: {mood.id} | amusement: {mood.amusement} | joy: {mood.joy} | beauty: {mood.beauty} | relaxation: {mood.relaxation} | sadness: {mood.sadness} | dreaminess: {mood.dreaminess} | triumph: {mood.triumph} | anxiety: {mood.anxiety} | scariness: {mood.scariness} | annoyance: {mood.annoyance} | defiance: {mood.defiance} | feelingpumped: {mood.feelingpumped}")
 
 @db_commands.cli.command("seed")
 def seed_tables():
@@ -62,9 +90,16 @@ def seed_tables():
     for i in range(30):
         track = Tracks()
         track.trackname = f"TestTrackName{i}"
-        track.artist = choice(artists).id
+        track.artist_id = choice(artists).id
         track.trackurl = f"TestTrackURL{i}"
         db.session.add(track)
     
     db.session.commit()
     print("Seeded Table: tracks")
+
+    for i in range(5):
+        moods = Moods()
+        db.session.add(moods)
+    
+    db.session.commit()
+    print("Seeded Table: moods")
