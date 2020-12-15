@@ -39,4 +39,16 @@ class TestAuth(unittest.TestCase):
         self.assertIsInstance(data, dict)
 
     def test_login(self):
-        pass
+        response = self.client.get(
+            "/userprofile/login",
+            data=json.dumps({
+                "email": "TestEmail1@test.com",
+                "password": "testpassword"
+            }),
+            content_type="application/json"
+        )
+
+        data = response.get_json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, dict)
