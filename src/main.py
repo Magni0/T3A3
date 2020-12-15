@@ -1,9 +1,10 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from marshmallow.exceptions import ValidationError
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager 
@@ -30,5 +31,9 @@ def create_app():
     from controllers import registable_controllers
     for controller in registable_controllers:
         app.register_blueprint(controller)
+
+    @app.errorhandler(ValidationError)
+    def handle_bad_request(error):
+        return (jsonify(error.messages), 400)
 
     return app
