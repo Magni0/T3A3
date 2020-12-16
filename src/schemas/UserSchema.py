@@ -8,7 +8,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         load_only = ["password"]
 
     displayname = ma.String()
-    email = ma.String(required=True, validate=Length(min=1))
+    email = ma.String()
     username = ma.String()
     password = ma.String(required=True, validate=Length(min=8))
 

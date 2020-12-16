@@ -1,9 +1,10 @@
 from main import db
+from models.Tracks import Tracks
 
 class Moods(db.Model):
     __tablename__="moods"
 
-    id = db.Column(db.Integer, db.Sequence('moods_id_seq'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     amusement = db.Column(db.Integer, default=0)
     joy = db.Column(db.Integer, default=0)
     beauty = db.Column(db.Integer, default=0)
@@ -16,3 +17,4 @@ class Moods(db.Model):
     annoyance = db.Column(db.Integer, default=0)
     defiance = db.Column(db.Integer, default=0)
     feelingpumped = db.Column(db.Integer, default=0)
+    track = db.relationship("Tracks", uselist=False, backref="mood")
