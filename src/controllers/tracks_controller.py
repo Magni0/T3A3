@@ -8,31 +8,37 @@ from services.auth_decorator import auth_decorator
 track = Blueprint("track", __name__, url_prefix="/tracks")
 
 @track.route("/", methods=["GET"])
-@jwt_required
-@auth_decorator
-def track_index(user=None):
+def track_index():
+    # Retrives all tracks
+
     pass
 
 @track.route("/track/<int:id>", methods=["GET"])
-@jwt_required
-@auth_decorator
-def track_retrive(id, user=None):
+def track_retrive(id):
+    # Retrives single track
+
     pass
 
 @track.route("/track", methods=["POST"])
 @jwt_required
 @auth_decorator
 def track_create(user=None):
+    # Creates a track
+    
     pass
 
 @track.route("/track/<int:id>", methods=["PUT", "PATCH"])
 @jwt_required
 @auth_decorator
 def track_update(id, user=None):
+    # Updates a track
+
     pass
 
 @track.route("/track/<int:id>", methods=["DELETE"])
 @jwt_required
 @auth_decorator
 def track_delete(id, user=None):
+    # Deletes a track
+    
     pass
