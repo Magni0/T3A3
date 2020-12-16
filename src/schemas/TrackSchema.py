@@ -7,9 +7,9 @@ class TrackSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Tracks
     
-    trackname = ma.String(required=True, validate=Length(min=1))
+    trackname = ma.String()
     artist = ma.Nested(ArtistSchema)
-    trackurl = ma.String(required=True, validate=Length(min=1))
+    trackurl = ma.String()
 
 track_schema = TrackSchema()
 tracks_schema = TrackSchema(many=True)

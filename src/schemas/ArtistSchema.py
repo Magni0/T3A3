@@ -5,7 +5,7 @@ class ArtistSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Artist
 
-    name = ma.String(required=True)
+    name = ma.String()
 
 artist_schema = ArtistSchema()
 artists_schema = ArtistSchema(many=True)
