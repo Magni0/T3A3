@@ -19,6 +19,11 @@ def create_tables():
     db.create_all()
     print("Created Tables")
 
+@db_commands.cli.command("check")
+def check_id():
+    last_record = db.session.query(User).order_by(User.id.desc()).first()
+    print(resent_record.id)
+
 @db_commands.cli.command("drop")
 def drop_tables():
     db.drop_all()
