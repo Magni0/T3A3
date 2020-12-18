@@ -54,7 +54,7 @@ def dump_tables():
         data = cursor.fetchall()
         dump[table] = data
 
-    dump_path = input("Type Dump Path: ")
+    dump_path = input("Dump Path: ")
 
     with open(f"{dump_path}/database_dump.json", "w") as f:
         f.write(json.dumps(dump, indent=4))
