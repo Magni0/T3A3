@@ -33,8 +33,7 @@ def drop_tables():
     db.engine.execute("DROP TABLE IF EXISTS alembic_version;")
     print("Deleted Tables")
 
-# needs to be finished
-@db_commands.cli.command("dump")
+@db_commands.cli.command(f"dump")
 def dump_tables():
     
     tables = ["userprofile", "tracks", "moods", "images", "artists"]
@@ -60,7 +59,7 @@ def dump_tables():
         data = cursor.fetchall()
         dump[table] = data
 
-    dump_path = input("Type Dump path: ")
+    dump_path = input("Type Dump Path: ")
 
     with open(f"{dump_path}/database_dump.json", "w") as f:
         f.write(json.dumps(dump, indent=4))
