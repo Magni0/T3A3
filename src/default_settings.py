@@ -8,7 +8,7 @@ class Config(object):
         value = os.environ.get("DB_URI")
 
         if not value:
-            raise ValueError("DB_URI not set in .env")
+            print("Warning: Set DB_URI in .env")
 
         return value
 
