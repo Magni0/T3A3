@@ -1,8 +1,8 @@
 name: Automated Tests
-
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
 
 jobs:
   test_suite:
@@ -16,7 +16,8 @@ jobs:
           python-version: 3.8
       - name: Install dependencies
         run: |
-          if [ -f requirements.txt ]; then pip install -r requirements.txt;
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run Tests
         run: |
           cd /home/runner/work/T3A3/T3A3/src
