@@ -8,33 +8,25 @@ from services.auth_decorator import auth_decorator
 mood = Blueprint("mood", __name__, url_prefix="/tracks/moods")
 
 @mood.route("/track/<int:id>", methods=["GET"])
-@jwt_required
-@auth_decorator
-def retrive_moods(id, user=None):
+def retrive_moods(id):
     # Retrives all moods of track
     
-    pass
+    return jsonify(mood_schema.dump(Moods.query.get(id)))
 
 @mood.route("track/<int:track_id>/add", methods=["POST"]) # need to add a str variable at end of path
-@jwt_required
-@auth_decorator
-def increment_mood(track_id, user=None):
+def increment_mood(track_id):
     # Increments specified mood by 1 
     
     pass
 
 @mood.route("track/<int:track_id>", methods=["DELETE"])
-@jwt_required
-@auth_decorator
-def clear_moods(track_id, user=None):
+def clear_moods(track_id):
     # Sets all moods of a track to 0
     
     pass
 
 @mood.route("track/<int:track_id>/clear", methods=["DELETE"])
-@jwt_required
-@auth_decorator
-def clear_mood(track_id, user=None):
+def clear_mood(track_id):
     # Sets specified mood to 0
     
     pass
