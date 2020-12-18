@@ -16,7 +16,10 @@ def user_register():
     if user:
         return abort(400, description="Email already registered to an account")
 
-    last_record = db.session.query(User).order_by(User.id.desc()).first()
+    try:
+        last_record = db.session.query(User).order_by(User.id.desc()).first()
+    except:
+        last_record = 0
 
     user = User()
     user.id = last_record.id + 1

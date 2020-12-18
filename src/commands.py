@@ -2,6 +2,8 @@ from main import db
 from flask import Blueprint
 from random import choice
 from main import bcrypt
+import psycopg2
+import json
 
 from models.User import User
 from models.Tracks import Tracks
@@ -30,32 +32,25 @@ def drop_tables():
     db.engine.execute("DROP TABLE IF EXISTS alembic_version;")
     print("Deleted Tables")
 
+# needs to be finished
 @db_commands.cli.command("dump")
 def dump_tables():
-    users = db.session.query(User).all()
-    print("\nuserprofile")
-    for user in users:
-        print(f"id: {user.id} | displayname: {user.displayname} | email: {user.email} | username: {user.username}")
+    
+    tables = ["userprofile", "moods", "images", "artists", "tracks"]
+    
+    connection = psycopg2.connect(
+        database="t3a3",
+        user="t3a3_admin",
+        password="1234",
+        host="localhost"
+    )
 
-    tracks = db.session.query(Tracks).all()
-    print("\ntracks")
-    for track in tracks:
-        print(f"id: {track.id} | trackname: {track.trackname} | artist_id: {track.artist_id} | trackurl: {track.trackurl}")
+    cursor = connection.cursor()
 
-    artists = db.session.query(Artist).all()
-    print("\nartists")
-    for artist in artists:
-        print(f"id: {artist.id} | name: {artist.name}")
-
-    images = db.session.query(Image).all()
-    print("\nimages")
-    for image in images:
-        print(f"id: {image.id} | url: {image.url} | height: {image.height} | width: {image.width}")
-
-    moods = db.session.query(Moods).all()
-    print("\nmoods")
-    for mood in moods:
-        print(f"id: {mood.id} | amusement: {mood.amusement} | joy: {mood.joy} | beauty: {mood.beauty} | relaxation: {mood.relaxation} | sadness: {mood.sadness} | dreaminess: {mood.dreaminess} | triumph: {mood.triumph} | anxiety: {mood.anxiety} | scariness: {mood.scariness} | annoyance: {mood.annoyance} | defiance: {mood.defiance} | feelingpumped: {mood.feelingpumped}")
+    for table in tables:
+        cursor.execute(f"SELECT * FROM {table}")
+        data = cursor.fetchall()
+        print(type(data))
 
 @db_commands.cli.command("seed")
 def seed_tables():
@@ -97,18 +92,16 @@ def seed_tables():
 
     # Tracks
     for i in range(30):
+        moods = Moods()
         track = Tracks()
+        db.session.add(moods)
+        db.session.commit()
         track.trackname = f"TestTrackName{i}"
         track.artist_id = choice(artists).id
+        track.moods_id = moods.id
         track.trackurl = f"TestTrackURL{i}"
         db.session.add(track)
     
     db.session.commit()
     print("Seeded Table: tracks")
-
-    for i in range(5):
-        moods = Moods()
-        db.session.add(moods)
     
-    db.session.commit()
-    print("Seeded Table: moods")

@@ -20,8 +20,6 @@ def track_retrive(id):
     return jsonify(track_schema.dump(Tracks.query.get(id)))
 
 @track.route("/track", methods=["POST"])
-@jwt_required
-@auth_decorator
 def track_create(user=None):
     # Creates a track
     
@@ -32,8 +30,6 @@ def track_create(user=None):
     #add artist_id
     #add moods_id
     new_track.trackurl = track_fields["trackurl"]
-
-    user.track.append(new_track) # may be broken
 
     db.session.add(new_track)
     db.session.commit()
@@ -46,9 +42,7 @@ def track_create(user=None):
 def track_update(id, user=None):
     # Updates a track
 
-    track_fields = track_schema.load(request.id)
-
-    # track = Tracks.query.filter_by(id=id)
+    pass
 
 @track.route("/track/<int:id>", methods=["DELETE"])
 @jwt_required
