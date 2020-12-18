@@ -41,16 +41,23 @@ def track_create(user=None):
     return jsonify(track_schema.dump(new_track))
 
 @track.route("/track/<int:id>", methods=["PUT", "PATCH"])
-@jwt_required
-@auth_decorator
 def track_update(id, user=None):
     # Updates a track
 
-    pass
+    track_fields = track_schema.load(request.json)
+
+    track = Tracks.query.get(id)
+
+    if not track:
+        return abort(400)
+
+    track.update(track_fields)
+    db.session.commit()
+
+    return jsonify(track_schema.dump(track))
+    
 
 @track.route("/track/<int:id>", methods=["DELETE"])
-@jwt_required
-@auth_decorator
 def track_delete(id, user=None):
     # Deletes a track
     
