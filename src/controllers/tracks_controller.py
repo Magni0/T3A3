@@ -1,6 +1,7 @@
 from main import db
 from flask import Blueprint, request, jsonify, abort
 from models.Tracks import Tracks
+from models.Moods import Moods
 from schemas.TrackSchema import track_schema, tracks_schema
 from flask_jwt_extended import jwt_required
 from services.auth_decorator import auth_decorator
@@ -25,10 +26,13 @@ def track_create(user=None):
     
     track_fields = track_schema.load(request.json)
 
+    new_mood = Moods()
+    db.session.add(new_mood)
+    db.session.commit()
+
     new_track = Tracks()
     new_track.trackname = track_fields["trackname"]
-    #add artist_id
-    #add moods_id
+    new_track.moods_id = new_mood.id
     new_track.trackurl = track_fields["trackurl"]
 
     db.session.add(new_track)
