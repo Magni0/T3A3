@@ -3,6 +3,7 @@ from flask import Blueprint
 from random import choice
 from main import bcrypt
 import psycopg2
+from psycopg2.extras import RealDictCursor
 import json
 
 from models.User import User
@@ -36,21 +37,33 @@ def drop_tables():
 @db_commands.cli.command("dump")
 def dump_tables():
     
-    tables = ["userprofile", "moods", "images", "artists", "tracks"]
+    tables = ["userprofile", "tracks", "moods", "images", "artists"]
     
+    dump = {}
+
+    host = str(input("host[localhost]: ") or "localhost")
+    database = str(input("database[postgres]: ") or "postgres")
+    user = str(input("user[postgres]: ") or "postgres")
+    password = input("password: ")
+
     connection = psycopg2.connect(
-        database="t3a3",
-        user="t3a3_admin",
-        password="1234",
-        host="localhost"
+        database=database,
+        user=user,
+        password=password,
+        host=host
     )
 
-    cursor = connection.cursor()
+    cursor = connection.cursor(cursor_factory=RealDictCursor)
 
     for table in tables:
         cursor.execute(f"SELECT * FROM {table}")
         data = cursor.fetchall()
-        print(type(data))
+        dump[table] = data
+
+    dump_path = input("Type Dump path: ")
+
+    with open(f"{dump_path}/database_dump.json", "w") as f:
+        f.write(json.dumps(dump, indent=4))
 
 @db_commands.cli.command("seed")
 def seed_tables():
