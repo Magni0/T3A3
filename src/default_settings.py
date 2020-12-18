@@ -15,10 +15,13 @@ class Config(object):
 class DevelopmentConfig(Config):
     @property
     def JWT_SECRET_KEY(self):
+        
         value = os.environ.get("JWT_SECRET_KEY")
 
         if not value:
-            raise ValueError("JWT Secret Key not set")
+            print("Warning: Set JWT_SECURITY_KEY in .env")
+            print("KEY: 'default_key' being used")
+            value = "default_key"
         
         return value
     
