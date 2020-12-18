@@ -12,7 +12,7 @@ track = Blueprint("track", __name__, url_prefix="/tracks")
 def track_index():
     # Retrives all tracks
 
-    return jsonify(tracks_schema.dump(Tracks.qurey.all()))
+    return jsonify(tracks_schema.dump(Tracks.query.all()))
 
 @track.route("/track/<int:id>", methods=["GET"])
 def track_retrive(id):

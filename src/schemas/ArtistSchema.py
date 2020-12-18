@@ -1,4 +1,4 @@
-from main import db
+from main import ma
 from models.Artist import Artist
 
 class ArtistSchema(ma.SQLAlchemyAutoSchema):

@@ -15,10 +15,10 @@ def retrive_moods(id, user=None):
     
     pass
 
-@mood.route("track/<int:track_id>/add/<str:mood>", methods=["POST"])
+@mood.route("track/<int:track_id>/add", methods=["POST"]) # need to add a str variable at end of path
 @jwt_required
 @auth_decorator
-def increment_mood(track_id, mood, user=None):
+def increment_mood(track_id, user=None):
     # Increments specified mood by 1 
     
     pass
@@ -31,10 +31,10 @@ def clear_moods(track_id, user=None):
     
     pass
 
-@mood.route("track/<int:track_id>/clear/<str:mood>", methods=["DELETE"])
+@mood.route("track/<int:track_id>/clear", methods=["DELETE"])
 @jwt_required
 @auth_decorator
-def clear_mood(track_id, mood, user=None):
+def clear_mood(track_id, user=None):
     # Sets specified mood to 0
     
     pass
