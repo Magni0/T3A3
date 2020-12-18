@@ -14,14 +14,14 @@ def track_index():
 
     return jsonify(tracks_schema.dump(Tracks.query.all()))
 
-@track.route("/track/<int:id>", methods=["GET"])
+@track.route("/<int:id>", methods=["GET"])
 def track_retrive(id):
     # Retrives single track
 
     return jsonify(track_schema.dump(Tracks.query.get(id)))
 
-@track.route("/track", methods=["POST"])
-def track_create(user=None):
+@track.route("/create", methods=["POST"])
+def track_create():
     # Creates a track
     
     track_fields = track_schema.load(request.json)
@@ -40,7 +40,7 @@ def track_create(user=None):
 
     return jsonify(track_schema.dump(new_track))
 
-@track.route("/track/<int:id>", methods=["PUT", "PATCH"])
+@track.route("/<int:id>", methods=["PUT", "PATCH"])
 def track_update(id, user=None):
     # Updates a track
 
@@ -57,7 +57,7 @@ def track_update(id, user=None):
     return jsonify(track_schema.dump(track))
     
 
-@track.route("/track/<int:id>", methods=["DELETE"])
+@track.route("/<int:id>", methods=["DELETE"])
 def track_delete(id, user=None):
     # Deletes a track
     
