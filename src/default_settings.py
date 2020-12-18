@@ -8,21 +8,19 @@ class Config(object):
         value = os.environ.get("DB_URI")
 
         if not value:
-            print("Warning: Set DB_URI in .env")
+            raise ValueError("DB_URI not set")
 
         return value
 
 class DevelopmentConfig(Config):
     @property
     def JWT_SECRET_KEY(self):
-        
+
         value = os.environ.get("JWT_SECRET_KEY")
 
         if not value:
-            print("Warning: Set JWT_SECURITY_KEY in .env")
-            print("KEY: 'default_key' being used")
-            value = "default_key"
-        
+            raise ValueError("JWT_SECRET_KEY not set")
+
         return value
     
 
@@ -32,10 +30,10 @@ class ProductionConfig(Config):
         value = os.environ.get("JWT_SECRET_KEY")
 
         if not value:
-            raise ValueError("JWT Secret Key not set")
-        
+            raise ValueError("JWT_SECRET_KEY not set")
+
         return value
-        
+
 class TestingConfig(Config):
     TESTING = True
 
