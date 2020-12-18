@@ -14,13 +14,24 @@ def retrive_moods(id):
     return jsonify(mood_schema.dump(Moods.query.get(id)))
 
 @mood.route("/add", methods=["POST"])
-def increment_mood(track_id):
-    # mood_fields = mood_schema.load(request.json)
-    
-    # # tracks id is the same as moods id
-    # moods = Moods.query.get(track_id)
+def increment_mood(id):
+    mood_fields = mood_schema.load(request.json)
 
-    pass
+    if len(mood_fields) != 1:
+        return abort(400, description="more than one mood in request")
+
+    for mood in mood_fields:
+        mood = mood
+    
+    # tracks id is the same as moods id
+    mood_num = Moods.query.filter_by(id=id)
+
+    mood_fields[mood] += 0
+
+    mood_num.update(mood_fields)
+    db.session.commit()
+
+    return jsonify(mood_schema.dump(mood_num[0]))
 
 @mood.route("/clear", methods=["DELETE"])
 def clear_moods(track_id):
