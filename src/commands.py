@@ -59,6 +59,8 @@ def dump_tables():
 
 @db_commands.cli.command("seed")
 def seed_tables():
+    
+    # User
     for i in range(10):
         user = User()
         user.id = i
@@ -71,8 +73,8 @@ def seed_tables():
     db.session.commit()
     print("Seeded Table: user")
 
+    # Artist
     artists = []
-
     for i in range(10):
         artist = Artist()
         artist.name = f"TestArtistName{i}"
@@ -82,6 +84,7 @@ def seed_tables():
     db.session.commit()
     print("Seeded Table: artist")
 
+    # Image
     for i in range(20):
         image = Image()
         image.url = f"TestURL{i}"
@@ -92,6 +95,7 @@ def seed_tables():
     db.session.commit()
     print("Seeded Table: images")
 
+    # Tracks
     for i in range(30):
         track = Tracks()
         track.trackname = f"TestTrackName{i}"
