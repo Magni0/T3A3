@@ -97,15 +97,32 @@ def seed_tables():
     db.session.commit()
     print("Seeded Table: images")
 
-    # Tracks
-    for i in range(30):
+    def moods_table_creation():
         moods = Moods()
-        track = Tracks()
+
+        moods.amusement = choice(range(1, 101))
+        moods.joy = choice(range(1, 101))
+        moods.beauty = choice(range(1, 101))
+        moods.relaxation = choice(range(1, 101))
+        moods.sadness = choice(range(1, 101))
+        moods.dreaminess = choice(range(1, 101))
+        moods.triumph = choice(range(1, 101))
+        moods.anxiety = choice(range(1, 101))
+        moods.scariness = choice(range(1, 101))
+        moods.annoyance = choice(range(1, 101))
+        moods.defiance = choice(range(1, 101))
+        moods.feelingpumped = choice(range(1, 101))
+
         db.session.add(moods)
         db.session.commit()
+        return moods
+
+    # Tracks
+    for i in range(30):
+        track = Tracks()
         track.trackname = f"TestTrackName{i}"
         track.artist_id = choice(artists).id
-        track.moods_id = moods.id
+        track.moods_id = moods_table_creation().id
         track.trackurl = f"TestTrackURL{i}"
         db.session.add(track)
     
