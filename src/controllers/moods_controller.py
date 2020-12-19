@@ -24,14 +24,16 @@ def increment_mood(id):
         mood = mood
     
     # tracks id is the same as moods id
-    mood_num = Moods.query.filter_by(id=id)
+    moods = Moods.query.filter_by(id=id)
+    mood_dict = mood_schema.dump(moods[0])
 
-    mood_fields[mood] += 0
+    mood_num = mood_dict[mood]
+    mood_fields[mood] = mood_num + 1
 
-    mood_num.update(mood_fields)
+    moods.update(mood_fields)
     db.session.commit()
 
-    return jsonify(mood_schema.dump(mood_num[0]))
+    return jsonify(mood_schema.dump(moods[0]))
 
 @mood.route("/clear", methods=["DELETE"])
 def clear_moods(track_id):
