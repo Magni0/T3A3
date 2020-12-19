@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test_suite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v2
+      - name: Set Up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt;
+      - name: Do Config
+        run: |
+          export DB_URI=postgresql+psycopg2://t3a3_admin:1234@localhost:5432/t3a3
+          export JWT_SECRET_KEY=testkey
+          export FLASK_APP="main:create_app()"
+          export FLASK_ENV=development
+      - name: Set Up DB
+        uses: harmon758/postgresql-action@v1
+        with:
+          postgresql db: t3a3
+          postgresql user: t3a3_admin
+          postgresql password: 1234
+      - name: Seed Database
+        run: |
+          cd /home/runner/work/T3A3/T3A3/src
+          flask db upgrade
+          flask db-c seed
+      - name: Run Tests
+        run: |
+          python -m unittest discover -s tests -v
