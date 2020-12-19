@@ -18,13 +18,8 @@ jobs:
       - name: Install Dependencies
         run: |
           cd /home/runner/work/T3A3/T3A3/src
-<<<<<<< HEAD
-=======
-          python -m venv venv
-          source venv/bash/activate
->>>>>>> bb12bbf7bf2c22b16320adb7da71ec2d75fbfc0f
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt;
       - name: Do Config
         run: |
           export DB_URI=postgresql+psycopg2://t3a3_admin:1234@localhost:5432/t3a3
