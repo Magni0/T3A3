@@ -8,13 +8,14 @@ from services.auth_decorator import auth_decorator
 mood = Blueprint("mood", __name__, url_prefix="/tracks/<int:id>/moods")
 
 @mood.route("/", methods=["GET"])
-def retrive_moods(id):
+def moods_retrive(id):
     # Retrives all moods of track
     
     return jsonify(mood_schema.dump(Moods.query.get(id)))
 
 @mood.route("/add", methods=["POST"])
-def increment_mood(id):
+def mood_increment(id):
+    # increments a selected mood by 1
     mood_fields = mood_schema.load(request.json)
 
     if len(mood_fields) != 1:
@@ -36,7 +37,7 @@ def increment_mood(id):
     return jsonify(mood_schema.dump(moods[0]))
 
 @mood.route("/clear", methods=["DELETE"])
-def clear_moods(id):
+def moods_clear(id):
     # Sets all moods of a track to 0
     moods = Moods.query.filter_by(id=id)
     mood_json = mood_schema.dump(moods[0]) 
