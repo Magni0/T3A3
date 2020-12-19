@@ -17,6 +17,7 @@ jobs:
           python-version: 3.8
       - name: Install Dependencies
         run: |
+          cd /home/runner/work/T3A3/T3A3/src
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Do Config
@@ -33,7 +34,6 @@ jobs:
           postgresql password: 1234
       - name: Seed Database
         run: |
-          cd /home/runner/work/T3A3/T3A3/src
           flask db upgrade
           flask db-c seed
       - name: Run Tests
