@@ -18,6 +18,8 @@ jobs:
       - name: Install Dependencies
         run: |
           cd /home/runner/work/T3A3/T3A3/src
+          python -m venv venv
+          source venv/bash/activate
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Do Config
@@ -34,7 +36,7 @@ jobs:
           postgresql password: 1234
       - name: Seed Database
         run: |
-          flask db upgrade
+          flask db-c create
           flask db-c seed
       - name: Run Tests
         run: |
