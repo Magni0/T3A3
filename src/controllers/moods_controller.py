@@ -41,18 +41,11 @@ def clear_moods(id):
     moods = Moods.query.filter_by(id=id)
     mood_json = mood_schema.dump(moods[0]) 
 
-    mood_json['amusement'] = 0
-    mood_json['joy'] = 0
-    mood_json['beauty'] = 0
-    mood_json['relaxation'] = 0
-    mood_json['sadness'] = 0
-    mood_json['dreaminess'] = 0
-    mood_json['triumph'] = 0
-    mood_json['anxiety'] = 0
-    mood_json['scariness'] = 0
-    mood_json['annoyance'] = 0
-    mood_json['defiance'] = 0
-    mood_json['feelingpumped'] = 0
+    for mood in mood_json:
+        if mood == "id":
+            continue
+        else:
+            mood_json[mood] = 0
     
     moods.update(mood_json)
     db.session.commit()
