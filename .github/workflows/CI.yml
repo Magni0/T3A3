@@ -32,10 +32,6 @@ jobs:
           postgresql db: t3a3
           postgresql user: t3a3_admin
           postgresql password: 1234
-      - name: Seed Database
-        run: |
-          python -c 'import commands; commands.create_tables()'
-          python -c 'import commands; commands.seed_tables()'
       - name: Run Tests
         run: |
           python -m unittest discover -s tests -v
