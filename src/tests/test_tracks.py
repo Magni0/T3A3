@@ -1,4 +1,4 @@
-from main import db.create_app
+from main import db, create_app
 from schemas.TrackSchema import TrackSchema
 import unittest
 import json
