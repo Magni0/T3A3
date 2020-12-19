@@ -19,7 +19,7 @@ jobs:
         run: |
           cd /home/runner/work/T3A3/T3A3/src
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt;
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Do Config
         run: |
           export DB_URI=postgresql+psycopg2://t3a3_admin:1234@localhost:5432/t3a3
