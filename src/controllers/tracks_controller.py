@@ -1,5 +1,5 @@
 from main import db
-from flask import Blueprint, request, jsonify, abort
+from flask import Blueprint, request, jsonify, abort, render_template
 from models.Tracks import Tracks
 from models.Moods import Moods
 from schemas.TrackSchema import track_schema, tracks_schema
@@ -13,7 +13,8 @@ track = Blueprint("track", __name__, url_prefix="/tracks")
 def track_index():
     # Retrives all tracks
 
-    return jsonify(tracks_schema.dump(Tracks.query.all()))
+    # return jsonify(tracks_schema.dump(Tracks.query.all()))
+    return render_template("tracks_index.html", tracks=Tracks.query.all())
 
 @track.route("/<int:id>", methods=["GET"])
 def track_retrive(id):
