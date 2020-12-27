@@ -22,16 +22,46 @@ class TestTracks(unittest.TestCase):
         cls.app_context.pop()
 
     def test_track_index(self):
-        pass
+        response = self.client.get("/tracks/")
+
+        data = response.get_json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, list)
 
     def test_track_retrive(self):
-        pass
+        response = self.client.get("/tracks/1")
+
+        data = response.get_json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, dict)
 
     def test_track_create(self):
-        pass
+        response = self.client.post(
+            "/tracks/create",
+            data=json.dumps({"trackname": "testname", "trackurl": "testurl"}),
+            content_type="application/json"
+        )
+
+        data = response.get_json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, dict)
 
     def test_track_update(self):
-        pass
+        response = self.client.patch(
+            "/tracks/3",
+            data=json.dumps({"trackname": "newtrackname"}),
+            content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, 200)
 
     def test_track_delete(self):
-        pass
+        response = self.client.delete("/tracks/2")
+
+        data = response.get_json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, dict)
