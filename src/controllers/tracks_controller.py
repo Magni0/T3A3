@@ -5,6 +5,7 @@ from models.Moods import Moods
 from schemas.TrackSchema import track_schema, tracks_schema
 from flask_jwt_extended import jwt_required
 from services.auth_decorator import auth_decorator
+from services.delete_record_decorator import delete_record_decorator
 
 track = Blueprint("track", __name__, url_prefix="/tracks")
 
@@ -46,26 +47,28 @@ def track_update(id, user=None):
 
     track_fields = track_schema.load(request.json)
 
-    track = Tracks.query.get(id)
+    track = Tracks.query.filter_by(id=id).update(track_fields)
 
     if not track:
         return abort(400)
 
-    track.update(track_fields)
     db.session.commit()
 
     return jsonify(track_schema.dump(track))
     
 
 @track.route("/<int:id>", methods=["DELETE"])
+@delete_record_decorator
 def track_delete(id, user=None):
     # Deletes a track
-    
+
     track = Tracks.query.get(id)
+    mood = Moods.query.get(id)
 
     if not track:
         return abort(400)
-    
+
+    db.session.delete(mood)
     db.session.delete(track)
     db.session.commit()
 
