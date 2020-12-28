@@ -1,5 +1,4 @@
 from main import db, create_app
-from schemas.UserSchema import UserSchema
 import unittest
 import json
 

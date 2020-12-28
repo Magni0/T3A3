@@ -1,5 +1,4 @@
 from main import db, create_app
-from schemas.MoodSchema import MoodSchema
 import unittest
 import json
 
@@ -22,10 +21,24 @@ class TestMoods(unittest.TestCase):
         cls.app_context.pop()
 
     def test_moods_retrive(self):
-        pass
+        response = self.client.get("/tracks/1/moods/")
+        data = response.get_json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, dict)
 
     def test_mood_increment(self):
-        pass
+        response = self.client.post(
+            "/tracks/5/moods/add",
+            data=json.dumps({"joy": 1}),
+            content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, 200)
 
     def test_moods_clear(self):
-        pass
+        response = self.client.delete("/tracks/1/moods/clear")
+        data = response.get_json()
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(data, dict)
