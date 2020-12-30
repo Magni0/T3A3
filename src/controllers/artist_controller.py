@@ -1,7 +1,10 @@
 from main import db
 from models.Artist import Artist
+from models.Tracks import Tracks
 from flask import Blueprint, jsonify, abort, request
 from schemas.ArtistSchema import artist_schema, artists_schema
+from schemas.TrackSchema import tracks_schema
+from services.auth_decorator import auth_decorator
 
 artist = Blueprint("artist", __name__, url_prefix="/artist")
 
@@ -12,6 +15,10 @@ def artist_index():
 @artist.route("/<int:id>", methods=["GET"])
 def artist_retrive(id):
     return jsonify(artist_schema.dump(Artist.query.get(id)))
+
+@artist.route("/<int:id>/tracks", methods=["GET"])
+def artist_retrive_tracks(id):
+    return jsonify(tracks_schema.dump(Tracks.query.filter_by(artist_id=id)))
 
 @artist.route("/", methods=["POST"])
 @auth_decorator
