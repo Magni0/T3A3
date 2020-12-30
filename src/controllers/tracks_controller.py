@@ -23,6 +23,7 @@ def track_retrive(id):
     return jsonify(track_schema.dump(Tracks.query.get(id)))
 
 @track.route("/create", methods=["POST"])
+@auth_decorator
 def track_create():
     # Creates a track
     
@@ -43,6 +44,7 @@ def track_create():
     return jsonify(track_schema.dump(new_track))
 
 @track.route("/<int:id>", methods=["PUT", "PATCH"])
+@auth_decorator
 def track_update(id, user=None):
     # Updates a track
 
@@ -60,6 +62,7 @@ def track_update(id, user=None):
 
 @track.route("/<int:id>", methods=["DELETE"])
 @delete_record_decorator
+@auth_decorator
 def track_delete(id, user=None):
     # Deletes a track
 

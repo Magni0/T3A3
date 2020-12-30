@@ -14,6 +14,7 @@ def artist_retrive(id):
     return jsonify(artist_schema.dump(Artist.query.get(id)))
 
 @artist.route("/", methods=["POST"])
+@auth_decorator
 def artist_create():
     artist_fields = artist_schema.load(request.json)
 
@@ -26,6 +27,7 @@ def artist_create():
     return jsonify(artist_schema.dump(new_artist))
 
 @artist.route("/<int:id>", methods=["PUT", "PATCH"])
+@auth_decorator
 def artist_update(id):
     artist_fields = artist_schema.load(request.json)
 

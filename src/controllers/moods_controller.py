@@ -37,6 +37,7 @@ def mood_increment(id):
     return jsonify(mood_schema.dump(moods[0]))
 
 @mood.route("/clear", methods=["DELETE"])
+@auth_decorator
 def moods_clear(id):
     # Sets all moods of a track to 0
     moods = Moods.query.filter_by(id=id)
