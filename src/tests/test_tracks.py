@@ -26,6 +26,8 @@ class TestTracks(unittest.TestCase):
         data = response.get_json()
 
         self.assertEqual(response.status_code, 200)
+        
+        # removed because of frontend
         # self.assertIsInstance(data, list)
 
     def test_track_retrive(self):
